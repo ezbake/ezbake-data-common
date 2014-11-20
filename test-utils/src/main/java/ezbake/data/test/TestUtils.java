@@ -14,18 +14,18 @@
 
 package ezbake.data.test;
 
-import java.util.Properties;
-import java.util.Set;
-
 import com.google.common.collect.Sets;
-
 import ezbake.base.thrift.Authorizations;
 import ezbake.base.thrift.EzSecurityPrincipal;
 import ezbake.base.thrift.EzSecurityToken;
 import ezbake.base.thrift.TokenType;
 import ezbake.base.thrift.ValidityCaveats;
 import ezbake.configuration.constants.EzBakePropertyConstants;
-import ezbake.security.client.EzbakeSecurityClient;
+import ezbake.security.client.EzBakeSecurityClientConfigurationHelper;
+import ezbake.security.client.provider.TokenProvider;
+
+import java.util.Properties;
+import java.util.Set;
 
 public class TestUtils {
     public final static String MOCK_APP_SEC_ID = "mockAppSecId";
@@ -64,7 +64,8 @@ public class TestUtils {
     public static void addSettingsForMock(Properties config) {
         config.setProperty(EzBakePropertyConstants.EZBAKE_CERTIFICATES_DIRECTORY, "./ssl/testing/certs");
         config.setProperty(EzBakePropertyConstants.THRIFT_USE_SSL, "false");
-        config.setProperty(EzbakeSecurityClient.USE_MOCK_KEY, "true"); // force Mock test
+        config.setProperty(EzBakeSecurityClientConfigurationHelper.USE_MOCK_KEY, "true"); // force Mock test
+        config.setProperty(TokenProvider.CLIENT_MODE, TokenProvider.ClientMode.MOCK.getValue());
         config.setProperty(EzBakePropertyConstants.EZBAKE_SECURITY_ID, MOCK_APP_SEC_ID);
     }
 }
